@@ -2,8 +2,31 @@
 import { motion } from "framer-motion";
 import { Twitter, Send, Wind, Zap, Leaf, Globe } from 'lucide-react';
 import Head from "next/head";
+import React, { useEffect } from "react";
+
+const carouselImages = [
+  "/WIND4.jpg",
+  "/WIND9.jpg",
+  "/WIND15.jpg",
+  "/WIND20.jpg",
+];
 
 export default function Home() {
+  const [currentImage, setCurrentImage] = React.useState(0);
+
+  const nextImage = () => {
+    setCurrentImage((prev) => (prev + 1) % carouselImages.length);
+  };
+
+  // Add this useEffect for auto-scroll
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % carouselImages.length);
+    }, 5000); // Changes image every 5 seconds
+
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <>
       <Head>
@@ -188,7 +211,7 @@ export default function Home() {
           </section>
 
           {/* Mission Section (New) */}
-          <section className="py-16 px-4 bg-violet-950/50 backdrop-blur-sm">
+          <section className="py-16 px-4 bg-violet-950/30 border-t border-violet-500 backdrop-blur-sm">
             <div className="max-w-4xl mx-auto text-center">
               <h2 className="text-3xl font-bold mb-8">Our Mission</h2>
               <p className="text-lg mb-8">
@@ -236,78 +259,65 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Wind Energy Stats */}
-          <section
-            id="stats"
-            className="px-4 py-16 text-center bg-violet-600/50 backdrop-blur-sm flex items-center justify-center"
-          >
+       
+
+          {/* Wind Image Carousel Section */}
+          <section className="relative h-[600px] overflow-hidden  backdrop-blur-sm mx-auto max-w-7xl my-20 rounded-xl">
             <motion.div
-              className=" w-full mx-auto p-8 rounded-2xl "
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+              className="relative w-full h-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              <p className="text-xl md:text-2xl text-violet-100 leading-relaxed">
-                Did you know, that 1 hour of wind energy powers 1,000 homes.
-                <span className="block mt-2 text-violet-300">
-                  Imagine scaling this with $WIND.
-                </span>
-              </p>
+              {carouselImages.map((image, index) => (
+                <motion.div
+                  key={image}
+                  className="absolute inset-0 py-4"
+                  initial={{ opacity: 0 }}
+                  animate={{ 
+                    opacity: index === currentImage ? 1 : 0,
+                    scale: index === currentImage ? 1 : 1.1 
+                  }}
+                  transition={{ duration: 1 }}
+                >
+                  <img
+                    src={image}
+                    alt={`Wind energy ${index + 1}`}
+                    className="w-fit mx-auto h-full object-cover object-top rounded-lg "
+                  />
+                
+                </motion.div>
+              ))}
+              
+              <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-10">
+                {carouselImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImage(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${
+                      index === currentImage
+                        ? "bg-violet-400 w-8"
+                        : "bg-violet-400/50 hover:bg-violet-400/75"
+                    }`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={nextImage}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 
+                        bg-violet-600/50 hover:bg-violet-600 p-2 rounded-full 
+                        backdrop-blur-sm transition-all"
+              >
+                <motion.div
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
+                  →
+                </motion.div>
+              </button>
             </motion.div>
           </section>
-
-          {/* Why Wind? */}
-          <section
-            id="why-wind"
-            className="min-h-screen px-4 py-16 bg-gradient-to-b from-violet-950/50 to-cyber-dark backdrop-blur-sm flex items-center justify-center"
-          >
-            <div>
-              <h2 className="text-4xl font-bold text-center">Why Wind?</h2>
-              <p className="mt-4 text-lg text-center">
-                Wind is limitless, sustainable, and the key to a greener
-                tomorrow. $WIND represents the future.
-              </p>
-              <motion.div
-                className="mt-8 flex justify-center"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <img
-                  src="/WIND12.jpg"
-                  alt="Wind energy illustration"
-                  className="w-full max-w-lg rounded-lg shadow-lg"
-                />
-              </motion.div>
-            </div>
-          </section>
-
-          {/* Join Section */}
-          {/* <section
-            id="join"
-            className="min-h-screen px-4 py-16 text-center bg-violet-950/50 backdrop-blur-sm flex items-center justify-center"
-          >
-            <div>
-              <h2 className="text-4xl font-bold text-violet-100">Join $WIND</h2>
-              <p className="mt-4 text-lg text-violet-200">
-                Be part of the renewable revolution and meme token future.
-              </p>
-              <motion.div
-                className="mt-8"
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <a
-                  href="#"
-                  className="px-8 py-4 text-xl font-semibold text-white bg-violet-600 rounded-lg hover:bg-violet-500 transition-colors border border-violet-400/50 shadow-lg shadow-violet-500/20"
-                >
-                  Buy $WIND Now
-                </a>
-              </motion.div>
-            </div>
-          </section> */}
 
           {/* Footer */}
           <footer className="py-6 text-center bg-violet-950/80 border-t border-violet-800/50">
