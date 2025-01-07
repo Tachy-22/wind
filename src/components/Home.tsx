@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion"; // Update import
-import { Twitter, Send, Wind, Zap, Leaf, Globe } from 'lucide-react';
+import {   Wind, Zap, Leaf, Globe,   } from 'lucide-react';
 import Head from "next/head";
 import Image from "next/image"; // Add this import
 import React, { useEffect } from "react";
@@ -14,9 +14,6 @@ const carouselImages = [
 export default function Home() {
   const [currentImage, setCurrentImage] = React.useState(0);
 
-  const nextImage = () => {
-    setCurrentImage((prev) => (prev + 1) % carouselImages.length);
-  };
 
   // Add this useEffect for auto-scroll
   useEffect(() => {
@@ -77,12 +74,16 @@ export default function Home() {
             transition={{ type: "spring", stiffness: 100 }}
           >
             <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-              <div className="text-3xl font-bold" style={{
-                background: 'linear-gradient(to right, rgb(167, 139, 250), rgb(103, 232, 249))',
-                WebkitBackgroundClip: 'text',
-                backgroundClip: 'text',
-                color: 'transparent'
-              }}>
+              <div
+                className="text-3xl font-bold"
+                style={{
+                  background:
+                    "linear-gradient(to right, rgb(167, 139, 250), rgb(103, 232, 249))",
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
                 $WIND
               </div>
 
@@ -132,13 +133,18 @@ export default function Home() {
                 transition={{ delay: 0.5 }}
               >
                 <a
-                  href="https://twitter.com/windtoken"
+                  href="https://x.com/windaimeme"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-8 py-4 text-xl bg-violet-600 rounded-lg inline-block
                     relative overflow-hidden group hover:shadow-neon transition-shadow duration-300 flex items-center gap-2"
                 >
-                  <Twitter className="w-6 h-6" />
+                  <Image
+                    src="/x.svg"
+                    alt="X (Twitter)"
+                    width={24}
+                    height={24}
+                  />
                   <span className="relative z-10">Twitter</span>
                   <motion.div
                     className="absolute inset-0 bg-violet-500"
@@ -148,13 +154,19 @@ export default function Home() {
                   />
                 </a>
                 <a
-                  href="https://t.me/windtoken"
+                  href="https://t.me/WindAiMeme"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-8 py-4 text-xl bg-violet-600 rounded-lg inline-block
                     relative overflow-hidden group hover:shadow-neon transition-shadow duration-300 flex items-center gap-2"
                 >
-                  <Send className="w-6 h-6" />
+                  <Image
+                    className="text-white"
+                    src="/telegram.svg"
+                    alt="Telegram"
+                    width={24}
+                    height={24}
+                  />
                   <span className="relative z-10">Telegram</span>
                   <motion.div
                     className="absolute inset-0 bg-violet-500"
@@ -176,12 +188,16 @@ export default function Home() {
                 transition={{ duration: 0.8 }}
                 className="text-center mb-12"
               >
-                <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{
-                  background: 'linear-gradient(to right, rgb(167, 139, 250), rgb(103, 232, 249))',
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  color: 'transparent'
-                }}>
+                <h2
+                  className="text-4xl md:text-5xl font-bold mb-6"
+                  style={{
+                    background:
+                      "linear-gradient(to right, rgb(167, 139, 250), rgb(103, 232, 249))",
+                    WebkitBackgroundClip: "text",
+                    backgroundClip: "text",
+                    color: "transparent",
+                  }}
+                >
                   More Than Just a Token
                 </h2>
                 <p className="text-lg md:text-xl text-violet-100 max-w-3xl mx-auto leading-relaxed">
@@ -218,6 +234,52 @@ export default function Home() {
                 </div>
               </motion.div>
             </div>
+          </section>
+
+          {/* Wind Image Carousel Section */}
+          <section className="relative h-[600px] overflow-hidden  backdrop-blur-sm mx-auto max-w-7xl my-20 rounded-xl">
+            <motion.div
+              className="relative w-full h-full"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              {carouselImages.map((image, index) => (
+                <motion.div
+                  key={image}
+                  className="absolute inset-0 py-4"
+                  initial={{ opacity: 0 }}
+                  animate={{
+                    opacity: index === currentImage ? 1 : 0,
+                    scale: index === currentImage ? 1 : 1.1,
+                  }}
+                  transition={{ duration: 1 }}
+                >
+                  <div className="relative w-fit mx-auto h-full bg-violet-500/50 lg:rounded-lg">
+                    <img
+                      src={image}
+                      alt={`Wind energy ${index + 1}`}
+                      //  fill
+                      className=" h-full object-contain object-top lg:rounded-lg"
+                    />
+                  </div>
+                </motion.div>
+              ))}
+
+              <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-10">
+                {carouselImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImage(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${
+                      index === currentImage
+                        ? "bg-violet-400 w-8"
+                        : "bg-violet-400/50 hover:bg-violet-400/75"
+                    }`}
+                  />
+                ))}
+              </div>
+            </motion.div>
           </section>
 
           {/* Mission Section (New) */}
@@ -278,7 +340,7 @@ export default function Home() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.8 }}
-                  className="relative w-full max-w-[500px] h-[500px] mx-auto"
+                  className="relative w-full max-w-[500px] h-[500px] mx-auto bg-violet-500/50 rounded-2xl "
                 >
                   <Image
                     src="/WIND20.jpg"
@@ -289,15 +351,19 @@ export default function Home() {
                 </motion.div>
               </div>
 
-              <div className="relative h-[600px] overflow-hidden p-3">
+              <div className="relative lg:h-[600px] overflow-hidden p-3">
                 {/* Static Content */}
                 <div className="relative z-10 text-center mt-[50%] transform -translate-y-1/2">
-                  <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{
-                    background: 'linear-gradient(to right, rgb(167, 139, 250), rgb(103, 232, 249))',
-                    WebkitBackgroundClip: 'text',
-                    backgroundClip: 'text',
-                    color: 'transparent'
-                  }}>
+                  <h2
+                    className="text-3xl md:text-4xl font-bold mb-6"
+                    style={{
+                      background:
+                        "linear-gradient(to right, rgb(167, 139, 250), rgb(103, 232, 249))",
+                      WebkitBackgroundClip: "text",
+                      backgroundClip: "text",
+                      color: "transparent",
+                    }}
+                  >
                     Transforming Energy
                   </h2>
                   <p className="text-lg text-violet-100">
@@ -307,66 +373,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </section>
-
-          {/* Wind Image Carousel Section */}
-          <section className="relative h-[600px] overflow-hidden  backdrop-blur-sm mx-auto max-w-7xl my-20 rounded-xl">
-            <motion.div
-              className="relative w-full h-full"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              {carouselImages.map((image, index) => (
-                <motion.div
-                  key={image}
-                  className="absolute inset-0 py-4"
-                  initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: index === currentImage ? 1 : 0,
-                    scale: index === currentImage ? 1 : 1.1,
-                  }}
-                  transition={{ duration: 1 }}
-                >
-                  <div className="relative w-fit mx-auto h-full">
-                    <img
-                      src={image}
-                      alt={`Wind energy ${index + 1}`}
-                    //  fill
-                      className=" h-full object-contain object-top rounded-lg"
-                    />
-                  </div>
-                </motion.div>
-              ))}
-
-              <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-10">
-                {carouselImages.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImage(index)}
-                    className={`w-3 h-3 rounded-full transition-all ${
-                      index === currentImage
-                        ? "bg-violet-400 w-8"
-                        : "bg-violet-400/50 hover:bg-violet-400/75"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              <button
-                onClick={nextImage}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 
-                        bg-violet-600/50 hover:bg-violet-600 p-2 rounded-full 
-                        backdrop-blur-sm transition-all"
-              >
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.5 }}
-                >
-                  →
-                </motion.div>
-              </button>
-            </motion.div>
           </section>
 
           {/* Footer */}
