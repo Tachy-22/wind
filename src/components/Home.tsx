@@ -1,14 +1,14 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // Update import
 import { Twitter, Send, Wind, Zap, Leaf, Globe } from 'lucide-react';
 import Head from "next/head";
+import Image from "next/image"; // Add this import
 import React, { useEffect } from "react";
 
 const carouselImages = [
   "/WIND4.jpg",
   "/WIND9.jpg",
   "/WIND15.jpg",
-  "/WIND20.jpg",
 ];
 
 export default function Home() {
@@ -77,7 +77,12 @@ export default function Home() {
             transition={{ type: "spring", stiffness: 100 }}
           >
             <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-              <div className="text-3xl font-bold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+              <div className="text-3xl font-bold" style={{
+                background: 'linear-gradient(to right, rgb(167, 139, 250), rgb(103, 232, 249))',
+                WebkitBackgroundClip: 'text',
+                backgroundClip: 'text',
+                color: 'transparent'
+              }}>
                 $WIND
               </div>
 
@@ -171,7 +176,12 @@ export default function Home() {
                 transition={{ duration: 0.8 }}
                 className="text-center mb-12"
               >
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6" style={{
+                  background: 'linear-gradient(to right, rgb(167, 139, 250), rgb(103, 232, 249))',
+                  WebkitBackgroundClip: 'text',
+                  backgroundClip: 'text',
+                  color: 'transparent'
+                }}>
                   More Than Just a Token
                 </h2>
                 <p className="text-lg md:text-xl text-violet-100 max-w-3xl mx-auto leading-relaxed">
@@ -259,7 +269,45 @@ export default function Home() {
             </div>
           </section>
 
-       
+          {/* New Dynamic Section */}
+          <section className="relative border-t border-violet-600  py-20 px-4 bg-violet-950/30 overflow-hidden">
+            <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left side - Image */}
+              <div className="relative">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8 }}
+                  className="relative w-full max-w-[500px] h-[500px] mx-auto"
+                >
+                  <Image
+                    src="/WIND20.jpg"
+                    alt="Wind Energy"
+                    fill
+                    className="rounded-2xl shadow-2xl object-cover"
+                  />
+                </motion.div>
+              </div>
+
+              <div className="relative h-[600px] overflow-hidden p-3">
+                {/* Static Content */}
+                <div className="relative z-10 text-center mt-[50%] transform -translate-y-1/2">
+                  <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{
+                    background: 'linear-gradient(to right, rgb(167, 139, 250), rgb(103, 232, 249))',
+                    WebkitBackgroundClip: 'text',
+                    backgroundClip: 'text',
+                    color: 'transparent'
+                  }}>
+                    Transforming Energy
+                  </h2>
+                  <p className="text-lg text-violet-100">
+                    Join us in creating a sustainable future powered by wind
+                    energy and blockchain technology.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
 
           {/* Wind Image Carousel Section */}
           <section className="relative h-[600px] overflow-hidden  backdrop-blur-sm mx-auto max-w-7xl my-20 rounded-xl">
@@ -274,21 +322,23 @@ export default function Home() {
                   key={image}
                   className="absolute inset-0 py-4"
                   initial={{ opacity: 0 }}
-                  animate={{ 
+                  animate={{
                     opacity: index === currentImage ? 1 : 0,
-                    scale: index === currentImage ? 1 : 1.1 
+                    scale: index === currentImage ? 1 : 1.1,
                   }}
                   transition={{ duration: 1 }}
                 >
-                  <img
-                    src={image}
-                    alt={`Wind energy ${index + 1}`}
-                    className="w-fit mx-auto h-full object-cover object-top rounded-lg "
-                  />
-                
+                  <div className="relative w-fit mx-auto h-full">
+                    <img
+                      src={image}
+                      alt={`Wind energy ${index + 1}`}
+                    //  fill
+                      className=" h-full object-contain object-top rounded-lg"
+                    />
+                  </div>
                 </motion.div>
               ))}
-              
+
               <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-10">
                 {carouselImages.map((_, index) => (
                   <button
