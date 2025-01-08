@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion"; // Update import
-import {   Wind, Zap, Leaf, Globe,   } from 'lucide-react';
+import {    Zap, Leaf, Globe, Wind,   } from 'lucide-react';
 import Head from "next/head";
 import Image from "next/image"; // Add this import
 import React, { useEffect } from "react";
@@ -87,13 +87,7 @@ export default function Home() {
                 $WIND
               </div>
 
-              <a
-                href="#join"
-                className="mx-4 hover:text-violet-400 transition-colors flex items-center gap-2"
-              >
-                <Wind className="w-5 h-5" />
-                Join
-              </a>
+            
             </div>
           </motion.nav>
 
@@ -232,6 +226,44 @@ export default function Home() {
                     minimal environmental impact while maximizing performance.
                   </p>
                 </div>
+              </motion.div>
+
+              {/* Whitepaper Buttons */}
+              <motion.div 
+                className="mt-12 flex flex-wrap gap-4 justify-center"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <a
+                  href="/wind-whitepaper.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3 bg-violet-600 rounded-lg inline-block
+                    relative overflow-hidden group hover:shadow-neon transition-shadow duration-300"
+                >
+                  <span className="relative z-10">View Whitepaper</span>
+                  <motion.div
+                    className="absolute inset-0 bg-violet-500"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
+                    transition={{ duration: 0.5 }}
+                  />
+                </a>
+                <a
+                  href="/wind-whitepaper.pdf"
+                  download
+                  className="px-6 py-3 border border-violet-400 rounded-lg inline-block
+                    relative overflow-hidden group hover:shadow-neon transition-shadow duration-300"
+                >
+                  <span className="relative z-10">Download Whitepaper</span>
+                  <motion.div
+                    className="absolute inset-0 bg-violet-600"
+                    initial={{ x: "-100%" }}
+                    whileHover={{ x: "100%" }}
+                    transition={{ duration: 0.5 }}
+                  />
+                </a>
               </motion.div>
             </div>
           </section>
